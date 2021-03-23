@@ -1,0 +1,113 @@
+.account-form
+{
+	text-align: center;
+	display: grid;
+	grid-template-rows: auto auto auto;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	padding: 50px 0px 50px 0px;
+	background: #1a1b1c;
+	width: 50%;
+	margin: auto;
+	box-sizing: border-box;
+}
+.account-form h1
+{
+	color: white;
+}
+.account-form img
+{
+	height: 100px;
+	width: 100px;
+	margin: auto;
+}
+.account-form form
+{
+	margin-top: 15px;
+}
+.form-field
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 20px;
+}
+.form-field svg
+{
+	color: white;
+	font-size: 1.7em;
+	margin-right: 10px;
+}
+.form-field input, select
+{
+	height: 35px;
+	width: 225px;
+	background-color: black;
+	padding-left: 10px;
+	border: 0px;
+	border-bottom: 2px solid white;
+	color: white;
+	font-size: 1em;
+}
+.form-field select
+{
+	width: 238px;
+}
+.form-field input[type='date']
+{
+	text-transform: uppercase;
+}
+::-webkit-calendar-picker-indicator
+{
+	filter: invert(1);
+}
+.form-field input:focus
+{
+	border-color: #dc143c;
+	color: #dc143c;
+}
+.account-form .alert
+{
+	color: red;
+	font-size: 0.9em;
+}
+.account-form button
+{
+	background-color: #dc143c;
+	height: 35px;
+	width: 120px;
+	border: 0px;
+	border-radius: 9999px;
+	font-weight: bold;
+	color: white;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+.account-form button:hover
+{
+	transform: scale(1.03);
+}
+.account-form a
+{
+	color: white;
+	font-size: 0.9em;
+}
+.account-form a:hover
+{
+	text-shadow: 0px 1px 2px white;
+}
+@media (min-width: 568px) and (max-width: 1302px)
+{
+	.account-form
+	{
+		width: 70%;
+	}
+}
+@media (min-width: 0px) and (max-width: 568px)
+{
+	.account-form
+	{
+		width: 100%;
+	}
+}

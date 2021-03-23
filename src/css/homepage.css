@@ -1,0 +1,81 @@
+.homepage
+{
+	text-align: center;
+	padding: 30px 0px 30px 0px;
+	display: grid;
+	grid-template-rows: 200px auto auto auto;
+	justify-content: center;
+	align-items: center;
+	background: #1a1b1c;
+	width: 70%;
+	margin: auto;
+	box-sizing: border-box;
+}
+.homepage img
+{
+	width: 150px;
+	height: 150px;
+}
+.homepage h1
+{
+	margin: 0px;
+	color: white;
+	text-shadow: 0px 2px 4px #dc143c;
+}
+.homepage p
+{
+	color: white;
+	width: 50%;
+	margin: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.homepage .links
+{
+	display: flex;
+	flex-direction: column;
+	margin: 15px 0px 15px 0px;
+	justify-content: center;
+	align-items: center;
+}
+.homepage a
+{
+	color: white;
+	background: #dc143c;
+	font-weight: bold;
+	padding: 10px;
+	margin-bottom: 10px;
+	width: 150px;
+}
+.homepage a:hover
+{
+	transform: scale(1.03);
+}
+.homepage span
+{
+	color: white;
+	font-size: 0.9em;
+	text-shadow: 0px 1px 2px #dc143c;
+}
+@media (min-width: 568px) and (max-width: 1302px)
+{
+	.homepage
+	{
+		width: 80%;
+	}
+	.homepage p
+	{
+		width: 70%;
+	}
+}
+@media (min-width: 0px) and (max-width: 568px)
+{
+	.homepage
+	{
+		width: 100%;
+	}
+	.homepage p
+	{
+		width: 80%;
+	}
+}
