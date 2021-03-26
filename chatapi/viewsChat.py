@@ -115,11 +115,11 @@ def removeFriend(request) :
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def getMessages(request, user1, user2) :
-	if str(request.user) != str(user1) and str(request.user) != str(user2):
+def getMessages(request, username) :
+	if str(request.user) != str(username):
 		return Response(False)
 	messages = Message.objects.filter(
-			Q(sender=user1, receiver=user2) | Q(sender=user2, receiver=user1)
+			Q(sender=username) | Q(receiver=username)
 		)
 	serializer = MessageSerializer(messages, many=True)
 	return Response(serializer.data)

@@ -10,7 +10,7 @@ import {hasAlpha, isAlphaNumeric, validateDate} from '../utils';
 
 const CreateAccount = () => {
 	const [accountInput, setAccountInput] = useState({username:'',password:'',email:'',gender:'M',dateOfBirth:''});
-	const {createAccount, login} = useContext(AppContext);
+	const {login} = useContext(AppContext);
 	const [alert, setAlert] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -94,7 +94,7 @@ const CreateAccount = () => {
 			setAlert('Username or email address already registered');
 			setAccountInput({username:'',password:'',email:'',gender:'M',dateOfBirth:''});
 			setIsLoading(false);
-			return
+			return;
 		}
 		login(username, token);
 	}

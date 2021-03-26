@@ -21,7 +21,7 @@ const Homepage = () => {
 				<Link to='/login'>Login</Link>
 				<Link to='/createAccount'>Create Account</Link>
 			</div>
-			<span>Made with <span style={{color:'red',fontSize:'1.2em'}}>❤</span> by LamiFY</span>
+			<span>Handcrafted with <span style={{color:'red',fontSize:'1.2em'}}>❤</span> by LamiFY</span>
 		</section>	
 	);
 }

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
+from django.db.models import Q
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
@@ -8,7 +9,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny 
 from rest_framework.authtoken.models import Token
 
-from chatapi.models import Account
+from chatapi.models import Account, FriendRequest, Friendship, Message
 from chatapi.serializers import AccountSerializer, TokenSerializer
 
 from validate_email import validate_email
@@ -47,8 +48,6 @@ def accountSearchView(request, keyword) :
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def accountDetailedView(request, username) :
-	if str(request.user) != str(username) :
-		return Response('NOT ALLOWED')
 	try :
 		account = Account.objects.get(username=username)
 	except :
@@ -101,14 +100,26 @@ def accountUpdateView(request, username) :
 @api_view(['GET']) 
 def accountDeleteView(request, username) :
 	if str(request.user) != str(username) :
+		print('NOT ALLOWED')
 		return Response('NOT ALLOWED')
 	try :
 		account = Account.objects.get(username=username)
 	except :
+		print('Account unablable')
 		return Response(False)
 	user = User.objects.get(username=username)
+	FriendRequest.objects.filter(
+			Q(sender=username) | Q(receiver=username)
+		).delete()
+	Friendship.objects.filter(
+			Q(user1=username) | Q(user2=username)
+		).delete()
+	Message.objects.filter(
+			Q(sender=username) | Q(receiver=username)
+		).delete()
 	user.delete()
 	account.delete()
+	print('done bro')
 	return Response(True)
 
 @api_view(['POST']) 
@@ -120,7 +131,6 @@ def accountLoginView(request) :
 		user = User.objects.get(
 				username=username
 			)
-		print(user.password)
 		if not check_password(password, user.password) :
 			return Response(False)
 	except :
@@ -133,16 +143,21 @@ def accountLoginView(request) :
 @permission_classes([IsAuthenticated])
 @api_view(['POST'])
 def passwordUpdateView(request, username) :
-	print(request.data['password'])
+	oldPassword = request.data['oldPassword']
+	newPassword = request.data['newPassword']
 	if str(request.user) != str(username) :
 		return Response('NOT ALLOWED')
 	try :
 		user = User.objects.get(username=username)
+		if not check_password(oldPassword, user.password) :
+			return Response(False)
 		user.delete()
-		User.objects.create_user(username=username, password=request.data['password'])
+		user = User.objects.create_user(username=username, password=newPassword)
+		token = Token.objects.get(user=user)
+		serializer = TokenSerializer(token)
 	except :
 		return Response(False)
-	return Response(True)
+	return Response(serializer.data['key'])
 
 @api_view(['POST'])
 @permission_classes([AllowAny])

@@ -24,5 +24,12 @@ export const reducer = (state, action) => {
 			width: width,
 		}
 	}
+	else if(action.type==='NEW_TOKEN') {
+		const {token} = action.payload;
+		return {
+			...state,
+			token:token
+		}
+	}
 	return state;
 }

@@ -10,7 +10,7 @@ const Login = () => {
 	const [alert, setAlert] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [accountInput, setAccountInput] = useState({username:'',password:''});
-	const {state:{loggedIn, height, width}, login} = useContext(AppContext);
+	const {state:{height, width}, login} = useContext(AppContext);
 
 	const handleSubmit = async () => {
 		setAlert('');

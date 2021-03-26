@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useReducer} from 'react';
+import React, {useEffect, useReducer} from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import Main from './components/Main';
@@ -11,6 +11,18 @@ import {reducer} from './reducer';
 import {urls} from './urls';
 
 import './css/global.css';
+
+/* SAMPLE ACCOUNT AND TOKEN FOR TESTING PURPOSES
+    account: {
+        accountCreated: "2021-03-14T17:47:49.836766Z",
+        dateOfBirth: "2021-03-14",
+        email: "sample@gmail.com",
+        gender: "M",
+        isOnline: false,
+        username: "sample", 
+    },
+    token: '6b4235e54600f9db216835bb372f465bfe031ec6'
+*/
 
 const states = {
     loggedIn: false,
@@ -51,12 +63,12 @@ const App = () => {
         dispatch({type:'LOGIN',payload:{account, token}});
     }
 
-    const createAccount = () => {
-        dispatch({type:'LOGIN'});
-    }
-
     const logout = () => {
         dispatch({type:'LOGOUT'});
+    }
+
+    const newToken = (token) => {
+        dispatch({type:'NEW_TOKEN',payload:{token}});
     }
 
     return (
@@ -65,7 +77,7 @@ const App = () => {
                     state,
                     login,
                     logout,
-                    createAccount,
+                    newToken,
                 }}>
             <div className='app-container' style={{minHeight:state.height-100, maxHeight:'auto'}}>
                 {

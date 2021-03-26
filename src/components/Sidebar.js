@@ -21,13 +21,13 @@ const Sidebar = ({toggleSidebar, showSidebar}) => {
 				{width < 568 && <button className='sidebar-close' type='button' onClick={toggleSidebar}><AiOutlineClose/></button>}
 			</div>			
 			<ul>
-				<li className={selectedTab === 'chats' && `activeSidebarItem`}>
+				<li className={selectedTab === 'chats' ? `activeSidebarItem` : ``}>
 					<Link to={`/dashboard`} onClick={()=>handleTabClick('chats')}>Chats</Link>					
 				</li>
-				<li className={selectedTab === 'notifications' && `activeSidebarItem`}>
+				<li className={selectedTab === 'notifications' ? `activeSidebarItem` : ``}>
 					<Link to={`/dashboard/notifications`} onClick={()=>handleTabClick('notifications')}>Notifications</Link>
 				</li>
-				<li className={selectedTab === 'myprofile' && `activeSidebarItem`}> 
+				<li className={selectedTab === 'myprofile' ? `activeSidebarItem` : ``}> 
 					<Link to={'/dashboard/myprofile'} onClick={()=>handleTabClick('myprofile')}>My Profile</Link>					
 				</li>
 			</ul>

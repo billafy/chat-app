@@ -1,0 +1,172 @@
+.profile
+{
+	display: grid;
+	grid-template-columns: 1fr;
+	margin: 30px;
+	grid-gap: 20px;
+}
+.profile a
+{
+	color: white;
+	font-size: 1.3em;
+}
+.profile h1
+{
+	color: #dc143c;
+	margin: 0px;
+	justify-self: center;
+}
+.profile-picture
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.profile-picture img
+{
+	height: 125px;
+	width: 125px;
+}
+.profile-details div
+{
+	display: flex;
+	align-items: center;
+	box-shadow: 0px 0px 3px black;
+	padding: 0px 10px 0px 10px;
+	margin-bottom: 10px;
+}
+.profile-details div:hover, .password-update div:hover, .account-delete p:hover
+{
+	box-shadow: 0px 0px 1px white;
+}
+.profile-details div p
+{
+	flex: 3;
+}
+.profile-details div span
+{
+	text-shadow: 0px 0px 3px white;
+}
+.profile-btn
+{
+	border: 0px;
+	color: white;
+	font-weight: bold;
+	font-size: 1em;
+	padding: 5px;
+	margin-bottom: 10px;
+	box-shadow: 0px 0px 1px black;
+}
+.profile-btn:hover
+{
+	transform: scale(1.03);
+}
+.init-upd-pwd
+{
+	background: green;
+}
+.password-update div, .account-delete p
+{
+	display: flex;
+	box-shadow: 0px 0px 3px black;
+	margin-bottom: 10px;
+	padding: 10px 10px 10px 10px;
+}
+.password-update label
+{
+	flex:3;
+}
+.password-update p
+{
+	color: red;
+	font-size: 0.9em;
+}
+.password-update button, .account-delete button
+{
+	margin-right: 5px;
+	background: transparent;
+	color: white;
+	border: 0px;
+	padding: 5px;
+}
+.password-update button:hover, .account-delete button:hover
+{
+	box-shadow: 0px 0px 3px black;
+}
+.init-del-acc
+{
+	background: red;
+}
+.profile-actions 
+{
+	width: 90%;
+	margin: 0px auto 10px auto;
+	text-align: center;
+}
+.profile-actions p
+{
+	margin: 0px;
+	margin-bottom: 20px;
+}
+.profile-action-buttons
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.profile-action-buttons button
+{
+	border: 0px;
+	width: 120px;
+	height: 35px;
+	font-size: 1em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-shadow: 0px 0px 3px black;
+	margin-right: 10px;
+}
+.profile-action-buttons a
+{
+	font-size: inherit;
+}
+.profile-action-buttons button:hover
+{
+	transform: scale(1.03);
+}
+.normal-btn
+{
+	background: #dc143c;
+	color: white;
+}
+.white-btn
+{
+	background: white;
+	color: black;
+}
+.red-btn
+{
+	background: red;
+	color: white;
+}
+.green-btn
+{
+	background: green;
+	color: white;
+}
+@media (min-width: 0px) and (max-width: 568px)
+{
+	.profile-details div, .password-update div
+	{
+		display: block;
+		padding-top: 1px;
+		padding-bottom: 10px;
+	}
+	.password-update label
+	{
+		display: block;
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
+}
