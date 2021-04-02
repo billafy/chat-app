@@ -6,10 +6,11 @@
 	grid-template-rows: 200px auto auto auto;
 	justify-content: center;
 	align-items: center;
-	background: #1a1b1c;
+	background: var(--primary);
 	width: 70%;
 	margin: auto;
 	box-sizing: border-box;
+	box-shadow: 0px 0px 1px black;
 }
 .homepage img
 {
@@ -19,12 +20,12 @@
 .homepage h1
 {
 	margin: 0px;
-	color: white;
-	text-shadow: 0px 2px 4px #dc143c;
+	color: var(--text);
+	text-shadow: 0px 2px 4px var(--secondary);
 }
 .homepage p
 {
-	color: white;
+	color: var(--text);
 	width: 50%;
 	margin: auto;
 	margin-top: 20px;
@@ -40,8 +41,8 @@
 }
 .homepage a
 {
-	color: white;
-	background: #dc143c;
+	color: var(--text);
+	background: var(--secondary);
 	font-weight: bold;
 	padding: 10px;
 	margin-bottom: 10px;
@@ -53,11 +54,11 @@
 }
 .homepage span
 {
-	color: white;
+	color: var(--text);
 	font-size: 0.9em;
-	text-shadow: 0px 1px 2px #dc143c;
+	text-shadow: 0px 1px 2px var(--secondary);
 }
-@media (min-width: 568px) and (max-width: 1302px)
+@media (min-width: 768px) and (max-width: 1302px)
 {
 	.homepage
 	{
@@ -68,7 +69,7 @@
 		width: 70%;
 	}
 }
-@media (min-width: 0px) and (max-width: 568px)
+@media (min-width: 0px) and (max-width: 768px)
 {
 	.homepage
 	{

@@ -7,12 +7,24 @@
 }
 .profile a
 {
-	color: white;
+	color: var(--text);
 	font-size: 1.3em;
+	display: inline;
+}
+.back-and-reload div
+{
+	display: inline;
+	float: right;
+}
+.profile .reload
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .profile h1
 {
-	color: #dc143c;
+	color: var(--secondary);
 	margin: 0px;
 	justify-self: center;
 }
@@ -32,13 +44,13 @@
 {
 	display: flex;
 	align-items: center;
-	box-shadow: 0px 0px 3px black;
+	box-shadow: 0px 0px 3px var(--tertiary);
 	padding: 0px 10px 0px 10px;
 	margin-bottom: 10px;
 }
 .profile-details div:hover, .password-update div:hover, .account-delete p:hover
 {
-	box-shadow: 0px 0px 1px white;
+	box-shadow: 0px 0px 1px var(--text);
 }
 .profile-details div p
 {
@@ -46,17 +58,17 @@
 }
 .profile-details div span
 {
-	text-shadow: 0px 0px 3px white;
+	text-shadow: 0px 0px 3px var(--text);
 }
 .profile-btn
 {
 	border: 0px;
-	color: white;
+	color: var(--text);
 	font-weight: bold;
 	font-size: 1em;
 	padding: 5px;
 	margin-bottom: 10px;
-	box-shadow: 0px 0px 1px black;
+	box-shadow: 0px 0px 1px var(--tertiary);
 }
 .profile-btn:hover
 {
@@ -69,7 +81,7 @@
 .password-update div, .account-delete p
 {
 	display: flex;
-	box-shadow: 0px 0px 3px black;
+	box-shadow: 0px 0px 3px var(--tertiary);
 	margin-bottom: 10px;
 	padding: 10px 10px 10px 10px;
 }
@@ -86,13 +98,13 @@
 {
 	margin-right: 5px;
 	background: transparent;
-	color: white;
+	color: var(--text);
 	border: 0px;
 	padding: 5px;
 }
 .password-update button:hover, .account-delete button:hover
 {
-	box-shadow: 0px 0px 3px black;
+	box-shadow: 0px 0px 3px var(--tertiary);
 }
 .init-del-acc
 {
@@ -124,8 +136,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	box-shadow: 0px 0px 3px black;
-	margin-right: 10px;
+	box-shadow: 0px 0px 3px var(--tertiary);
 }
 .profile-action-buttons a
 {
@@ -137,25 +148,25 @@
 }
 .normal-btn
 {
-	background: #dc143c;
-	color: white;
+	background: var(--secondary);
+	color: var(--text);
 }
-.white-btn
+.var(--text)-btn
 {
-	background: white;
-	color: black;
+	background: var(--text);
+	color: var(--tertiary);
 }
 .red-btn
 {
 	background: red;
-	color: white;
+	color: var(--text);
 }
 .green-btn
 {
 	background: green;
-	color: white;
+	color: var(--text);
 }
-@media (min-width: 0px) and (max-width: 568px)
+@media (min-width: 0px) and (max-width: 1102px)
 {
 	.profile-details div, .password-update div
 	{

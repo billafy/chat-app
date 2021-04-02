@@ -6,7 +6,7 @@ import '../css/sidebar.css';
 import {AiOutlineClose} from 'react-icons/ai';
 
 const Sidebar = ({toggleSidebar, showSidebar}) => {
-	const {state:{height,width},logout} = useContext(AppContext);
+	const {state:{height,width,account},logout} = useContext(AppContext);
 	const [selectedTab, setSelectedTab] = useState('chats');
 
 	const handleTabClick = (tabName) => {
@@ -15,10 +15,10 @@ const Sidebar = ({toggleSidebar, showSidebar}) => {
 	}
 
 	return (
-		<div className={(width > 568 || showSidebar) ? `sidebar sidebar-active` : `sidebar sidebar-inactive`} style={width < 568 ? {minHeight:height-100,maxHeight:'auto'} : {}}>
+		<div className={(width > 768 || showSidebar) ? `sidebar sidebar-active` : `sidebar sidebar-inactive`} style={width < 768 ? {minHeight:height-100,maxHeight:'auto'} : {}}>
 			<div className='sidebar-logo'>
 				<img src={logo}/>
-				{width < 568 && <button className='sidebar-close' type='button' onClick={toggleSidebar}><AiOutlineClose/></button>}
+				{width < 768 && <button className='sidebar-close' type='button' onClick={toggleSidebar}><AiOutlineClose/></button>}
 			</div>			
 			<ul>
 				<li className={selectedTab === 'chats' ? `activeSidebarItem` : ``}>
@@ -31,7 +31,10 @@ const Sidebar = ({toggleSidebar, showSidebar}) => {
 					<Link to={'/dashboard/myprofile'} onClick={()=>handleTabClick('myprofile')}>My Profile</Link>					
 				</li>
 			</ul>
-			<button className='logout-btn' type='button' onClick={logout}>Log Out</button>
+			<div className='logout'>
+				<p>{account.username}</p>
+				<button className='logout-btn' type='button' onClick={logout}>Log Out</button>
+			</div>
 		</div>
 	);
 }

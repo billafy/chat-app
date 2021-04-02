@@ -23,6 +23,7 @@ urlpatterns = [
 	path('get-friends/<str:username>/', viewsChat.getFriends, name='Get Friends'),
 	path('remove-friend/', viewsChat.removeFriend, name='Remove As Friend'),
 	path('get-messages/<str:username>/', viewsChat.getMessages, name='Get Messages'),
+	path('get-conversation/<int:id>/', viewsChat.getConversation, name='Get Conversation'),
 	path('send-message/', viewsChat.sendMessage, name='Send Message'),
 	path('edit-message/<int:id>/', viewsChat.editMessage, name='Edit Message'),
 	path('delete-message/<int:id>/', viewsChat.deleteMessage, name='Delete Message'),

@@ -12,6 +12,9 @@ from chatapi.serializers import FriendRequestSerializer, FriendshipSerializer, M
 
 from datetime import datetime
 
+from asgiref.sync import sync_to_async 
+
+@sync_to_async
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -22,6 +25,7 @@ def getFriendRequestsSent(request, username) :
 	serializer = FriendRequestSerializer(friendRequests, many=True)
 	return Response(serializer.data)
 
+@sync_to_async
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -32,6 +36,7 @@ def getFriendRequestsReceived(request, username) :
 	serializer = FriendRequestSerializer(friendRequests, many=True)
 	return Response(serializer.data)
 
+@sync_to_async
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -59,7 +64,7 @@ def sendFriendRequest(request) :
 def removeFriendRequest(request) :
 	sender = request.data['sender']
 	receiver = request.data['receiver']
-	if str(request.user) != str(sender) or str(request.user) != str(receiver) :
+	if str(request.user) != str(sender) and str(request.user) != str(receiver) :
 		return Response(False)
 	try :
 		friendRequest = FriendRequest.objects.get(sender=sender,receiver=receiver)
@@ -112,6 +117,7 @@ def removeFriend(request) :
 		return Response(False)
 	return Response(True)
 
+@sync_to_async
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -124,6 +130,21 @@ def getMessages(request, username) :
 	serializer = MessageSerializer(messages, many=True)
 	return Response(serializer.data)
 
+@sync_to_async
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def getConversation(request, id) :
+	try :
+		friendship = Friendship.objects.get(id=id)
+	except :
+		return Response(False)
+	if str(friendship.user1) != str(request.user) and str(friendship.user2) != str(request.user) :
+		return Response(False)
+	conversation = Message.objects.filter(friendshipId=id)
+	serializer = MessageSerializer(conversation, many=True)
+	return Response(serializer.data)
+ 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])

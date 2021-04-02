@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {Link} from 'react-router-dom';
+import {AiOutlineReload} from 'react-icons/ai';
 import {BiArrowBack} from 'react-icons/bi';
 
 import {useParams} from 'react-router-dom';
@@ -16,15 +17,28 @@ import profilePicture from '../images/profilepicture.png';
 
 const Profile = () => {
 	const {state:{token}} = useContext(AppContext);
-	const {getProfileStatus} = useContext(MainContext);
+	const {state:{friends}, getProfileStatus, getFriends, getFriendRequestsReceived, getFriendRequestsSent} = useContext(MainContext);
 	const {username} = useParams();
 	const [profile, setProfile] = useState({});
 	const [profileLoading, setProfileLoading] = useState(true);
 	const [status, setStatus] = useState('');
+	const [reloadClass, setReloadClass] = useState('reload');
+	const [friend, setFriend] = useState({});
+ 
+	useEffect(() => {
+		const newFriend = friends.filter(friend => (friend.user1===username || friend.user2===username));
+		setFriend(newFriend && newFriend[0]);
+		getProfile();
+		reloadFriendsAndRequests();
+	}, []);
 
 	useEffect(() => {
-		getProfile();
-	}, []);
+		getProfileStatus(username)
+		.then(newStatus => {
+			if(status!==newStatus)
+				setStatus(newStatus);
+		})
+	}, [getProfileStatus])
 
 	const getProfile = async () => {
 		const url = urls.accountDetailed + username + '/';
@@ -36,12 +50,24 @@ const Profile = () => {
 		const data = await response.json();
 		setProfile(data);
 		setProfileLoading(false);
-		setStatus(/* getProfileStatus(username) */'FRIEND');
+	}
+
+	const reloadFriendsAndRequests = () => {
+		setReloadClass('reload reload-spin');
+		getFriends();
+		getFriendRequestsSent();
+		getFriendRequestsReceived()
+		.then(() => setReloadClass('reload'));
 	}
 
 	return (
 		<div className='profile'>
-			<Link to='/dashboard'><BiArrowBack/></Link>
+			<div className='back-and-reload'>
+				<Link to='/dashboard/search'><BiArrowBack/></Link>
+				<div>
+					<button onClick={reloadFriendsAndRequests} className={reloadClass}><AiOutlineReload/></button>
+				</div>
+			</div>
 			{!profileLoading
 				?
 				<>
@@ -50,7 +76,7 @@ const Profile = () => {
 						<h3>{profile.username}</h3>
 					</div>
 					<div className='profile-actions'>
-						<ProfileActions username={username} status={status}/>
+						<ProfileActions username={username} status={status} friend={friend}/>
 					</div>
 					<div className='profile-details'>
 						<div><p>Email Address </p> <span>{profile.email}</span></div>

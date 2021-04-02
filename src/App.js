@@ -1,4 +1,4 @@
-import React, {useEffect, useReducer} from 'react';
+import React, {useState, useEffect, useReducer} from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import Main from './components/Main';
@@ -9,6 +9,9 @@ import Error from './components/Error';
 
 import {reducer} from './reducer';
 import {urls} from './urls';
+import redBlack from './images/red-black.jpg';
+import bluePink from './images/blue-pink.jpg';
+import yellowWhite from './images/yellow-white.jpg';
 
 import './css/global.css';
 
@@ -32,13 +35,34 @@ const states = {
     height: window.innerHeight,
 };
 
+const backgrounds = {
+    'red-black' : redBlack,
+    'blue-pink' : bluePink,
+    'yellow-white' : yellowWhite,
+}
+
+const gradients = {
+    'red-black' : 'linear-gradient(to right, #d31027, #ea384d)',
+    'blue-pink' : 'linear-gradient(to right, #457fca, #5691c8)',
+    'yellow-white' : 'linear-gradient(to right, #ffb75e, #ed8f03)',
+}
+
 export const AppContext = React.createContext();
 
 const App = () => {
     const [state, dispatch] = useReducer(reducer, states);
+    const [theme, setTheme] = useState('red-black');
 
     useEffect(() => {
-    }, []);
+        const localTheme = localStorage.getItem('theme')
+        if(localTheme)
+            setTheme(localTheme);
+    }, [])
+
+    useEffect(() => {
+        document.body.style.background = gradients[theme];
+        localStorage.setItem('theme',theme);
+    }, [theme]);
 
     useEffect(() => {
         window.addEventListener('resize',() => {
@@ -79,38 +103,48 @@ const App = () => {
                     logout,
                     newToken,
                 }}>
-            <div className='app-container' style={{minHeight:state.height-100, maxHeight:'auto'}}>
-                {
-                    state.loggedIn
-                    ?
-                        <Router>
-                            <Switch>
-                                <Route path={['/dashboard','/login','/createAccount']}>
-                                    <Main/>                                    
-                                </Route>
-                                <Route path='*'>
-                                    <Error/>                                    
-                                </Route>
-                            </Switch>
-                        </Router>
-                    :
-                        <Router>
-                            <Switch>
-                                <Route path='/login'>
-                                    <Login/>                                    
-                                </Route>
-                                <Route path='/createAccount'>
-                                    <CreateAccount/>                                    
-                                </Route>
-                                <Route path={['/dashboard']}>
-                                    <Homepage/>                                    
-                                </Route>
-                                <Route path='*'>
-                                    <Error/>                                    
-                                </Route>
-                            </Switch>
-                        </Router>
-                }
+            <div className={theme}>
+                <div className='app-container' style={{minHeight:state.height-100, maxHeight:'auto',background:`url(${backgrounds[theme]})`}}>
+                    {
+                        state.loggedIn
+                        ?
+                            <Router>
+                                <Switch>
+                                    <Route path={['/dashboard','/login','/createAccount']}>
+                                        <Main/>                                    
+                                    </Route>
+                                    <Route path='*'>
+                                        <Error/>                                    
+                                    </Route>
+                                </Switch>
+                            </Router>
+                        :
+                            <Router>
+                                <Switch>
+                                    <Route path='/login'>
+                                        <Login/>                                    
+                                    </Route>
+                                    <Route path='/createAccount'>
+                                        <CreateAccount/>                                    
+                                    </Route>
+                                    <Route path={['/dashboard']}>
+                                        <Homepage/>                                    
+                                    </Route>
+                                    <Route path='*'>
+                                        <Error/>                                    
+                                    </Route>
+                                </Switch>
+                            </Router>
+                    }
+                </div>
+                <div className='theme-changer'>
+                    <p>Theme</p>  
+                    <select value={theme} onChange={(event)=>setTheme(event.target.value)}>
+                        <option value='red-black'>Sin City Red</option>
+                        <option value='blue-pink'>Rose Water</option>
+                        <option value='yellow-white'>Horizon</option>                    
+                    </select>              
+                </div>
             </div>
         </AppContext.Provider>
     );

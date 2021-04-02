@@ -1,18 +1,24 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Link} from 'react-router-dom';
 import {AiFillCaretDown} from 'react-icons/ai';
 
-const ProfileActions = ({username, status}) => {
+import {MainContext} from './Main';
+
+import {AppContext} from '../App';
+
+const ProfileActions = ({username, status, friend}) => {
 	const [showDropdown, setShowDropdown] = useState(false);
+	const {sendFriendRequest, acceptFriendRequest, removeFriendRequest, removeFriend} = useContext(MainContext);
+	const {state: {account}} = useContext(AppContext);
 
 	if(status==='FRIEND') {
 		return (
 			<>
 				<div className='profile-action-buttons'>
-					<Link to={`/dashboard/conversation/${username}`}>
+					<Link to={`/dashboard/conversation/${friend.id}/${friend.user1 === account.username ? friend.user2 : friend.user1}`} style={{marginRight:10}}>
 						<button className='normal-btn'>Message</button>
 					</Link>
-					<button className='red-btn'>Unfriend</button>
+					<button className='red-btn' onClick={()=>removeFriend(username)}>Unfriend</button>
 				</div>
 			</>				
 		);
@@ -22,7 +28,7 @@ const ProfileActions = ({username, status}) => {
 			<>
 				<p>You have sent a friend request to {username}</p>
 				<div className='profile-action-buttons'>
-					<button className='red-btn'>Cancel</button>
+					<button className='red-btn' onClick={()=>removeFriendRequest(username)}>Cancel</button>
 				</div>
 			</>	
 		);
@@ -32,8 +38,8 @@ const ProfileActions = ({username, status}) => {
 			<>
 				<p>{username} has sent you a friend request</p>
 				<div className='profile-action-buttons'>
-					<button className='green-btn'>Accept</button>
-					<button className='red-btn'>Reject</button>
+					<button className='green-btn' onClick={()=>acceptFriendRequest(username)} style={{marginRight:10}}>Accept</button>
+					<button className='red-btn' onClick={()=>removeFriendRequest(username)}>Reject</button>
 				</div>
 			</>		
 		);
@@ -41,7 +47,7 @@ const ProfileActions = ({username, status}) => {
 	return (
 		<>
 			<div className='profile-action-buttons'>
-				<button className='normal-btn'>Add Friend</button>
+				<button className='normal-btn' onClick={()=>sendFriendRequest(username)}>Add Friend</button>
 			</div>
 		</>
 	);

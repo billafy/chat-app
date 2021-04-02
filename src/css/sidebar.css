@@ -4,7 +4,7 @@
 	display: flex;
 	flex-direction: column;
 	box-sizing: border-box;
-	background: #1a1b1c;
+	background: var(--primary);
 }
 .sidebar-logo
 {
@@ -33,23 +33,33 @@
 }
 .sidebar li:hover
 {
-	border-left: 2px solid #dc143c;
+	border-left: 2px solid var(--secondary);
 	padding-left: 10px;
 }
 .activeSidebarItem
 {
-	border-left: 2px solid #dc143c;
+	border-left: 2px solid var(--secondary);
 	padding-left: 10px;
 }
 .sidebar ul li a
 {
-	color: white;
+	color: var(--text);
 	font-size: 1.3em;
+}
+.logout
+{
+	align-self: center;
+}
+.logout p
+{
+	margin: 0px;
+	text-align: center;
+	margin-bottom: 5px;
 }
 .logout-btn
 {
 	background: transparent;
-	color: #dc143c;
+	color: var(--secondary);
 	border: 0;
 	width: 100px;
 	height: 30px;
@@ -58,15 +68,15 @@
 }
 .logout-btn:hover
 {
-	background: #dc143c;
-	color: white;
+	background: var(--secondary);
+	color: var(--text);
 }
 .sidebar-close
 {
 	background: transparent;
 	border: 0px;
 	font-size: 2em;
-	color: white;
+	color: var(--text);
 	transition: transform 1s;
 	width: 75px;
 	height: 75px;
@@ -75,13 +85,13 @@
 {
 	transform: scale(1.1);
 }
-@media(min-width: 0px) and (max-width: 568px)
+@media(min-width: 0px) and (max-width: 768px)
 {
 	.sidebar
 	{
 		position: absolute;
 		visibility: hidden;
-		background: #1a1b1c;
+		background: var(--primary);
 		width: 100%;
 		transition: transform 0.5s ease;
 		transform: translateX(-100%);
@@ -102,7 +112,7 @@
 	.sidebar-close
 	{
 		flex: 2;
-		color: white;
+		color: var(--text);
 	}
 	.sidebar-close svg
 	{

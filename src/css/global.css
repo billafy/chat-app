@@ -14,32 +14,115 @@ a
 {
 	text-decoration: none;
 }
-body
-{
-	background: linear-gradient(to right, #7b4397, #dc2430);
-	background: linear-gradient(to right, #d31027, #ea384d);
-	margin: 0;
-	padding: 0px;
-}
 .app-container
 {
 	width: 80%;
 	margin: auto;
 	margin-top: 50px;
 	margin-bottom: 50px;
-	background: url('https://www.wallpapertip.com/wmimgs/91-915470_black-wallpaper-design.jpg');
 	box-shadow: 0px 3px 5px black;
 	padding: 50px 0px 50px 0px;
 	box-sizing: border-box;
 }
-@media (min-width: 568px) and (max-width: 1302px)
+.red-black
+{
+	--primary: #1a1b1c;
+	--secondary: #dc143c;
+	--tertiary: #000000;
+	--text: #ffffff;
+	--text2: #e5e4e2;
+}
+.blue-pink
+{
+	--primary: #fadadd;
+	--secondary: #0ebfe9;
+	--tertiary: #ff69b4;
+	--text: #000000;
+	--text2: #1a1b1c;
+}
+.yellow-white
+{
+	--primary: #f5f5f5;
+	--secondary: #ffd700;
+	--tertiary: #f3e5ab;
+	--text: #000000;
+	--text2: #1a1b1c;
+}
+body
+{
+	margin: 0;
+	padding: 0px;
+}
+.reload
+{
+	background: transparent;
+	color: var(--text);
+	font-size: 1.3em;
+	border: 0px;
+	width: 30px;
+	padding: 0px;
+	justify-content: center;
+	align-items: center;
+}
+.reload:hover
+{
+	transform: scale(1.1);
+}
+.reload-spin
+{
+	animation: spin 1s linear infinite;
+}
+.theme-changer
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 30px auto 30px auto;
+}
+.theme-changer p
+{
+	color: white;
+	font-weight: bold;
+	font-size: 1.1em;
+	margin: 10px;
+}
+.theme-changer select
+{
+	float: right;
+	background: white;
+	color: black;
+}
+::placeholder
+{
+  color: var(--text);
+  opacity: 0.7;
+}
+
+:-ms-input-placeholder
+{
+  color: var(--text);
+  opacity: 0.7;
+}
+
+::-ms-input-placeholder
+{
+  color: var(--text);
+  opacity: 0.7;
+}
+
+@keyframes spin
+{
+	0% {transform: rotate(0deg);}
+	100% {transform: rotate(360deg);}
+}
+@media (min-width: 768px) and (max-width: 1302px)
 {
 	.app-container
 	{
 		width: 90%;
 	}
 }
-@media (min-width: 0px) and (max-width: 568px)
+@media (min-width: 0px) and (max-width: 768px)
 {
 	.app-container
 	{

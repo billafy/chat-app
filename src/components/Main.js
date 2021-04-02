@@ -4,10 +4,13 @@ import {AppContext} from '../App';
 
 import '../css/main.css';
 
+import Chats from './Chats';
+import Conversation from './Conversation';
 import Sidebar from './Sidebar';
 import MyProfile from './MyProfile';
 import SearchResults from './SearchResults';
 import Profile from './Profile';
+import Notifications from './Notifications';
 
 import {GiHamburgerMenu} from 'react-icons/gi';
 import {AiOutlineSearch} from 'react-icons/ai';
@@ -33,17 +36,6 @@ const Main = () => {
 	const {state:{account, token, height, width}} = useContext(AppContext);
 	const [showSidebar, setShowSidebar] = useState(false);
 	const history = useHistory();
-
-	useEffect(() => {
-		history.push('/dashboard');
-	}, []);
-
-	useEffect(() => {
-		getFriends();
-		getFriendRequestsSent();
-		getFriendRequestsReceived();
-		getMessages();
-	}, []);
 
 	const toggleSidebar = () => {
 		setShowSidebar(!showSidebar);
@@ -75,7 +67,8 @@ const Main = () => {
 			}
 		});
 		const friends = await response.json();
-		dispatch({type:'FRIENDS_INIT',payload:{friends}});
+		if(state.friends.length !== friends.length)
+			dispatch({type:'FRIENDS_INIT',payload:{friends}});
 	}
 
 	const getFriendRequestsSent = async () => {
@@ -87,7 +80,8 @@ const Main = () => {
 			}
 		});
 		const requests = await response.json();
-		dispatch({type:'REQ_SENT_INIT',payload:{requests}});
+		if(state.friendRequestsSent.length !== requests.length)
+			dispatch({type:'REQ_SENT_INIT',payload:{requests}});
 	}
 
 	const getFriendRequestsReceived = async () => {
@@ -99,7 +93,8 @@ const Main = () => {
 			}
 		});
 		const requests = await response.json();
-		dispatch({type:'REQ_RECEIVED_INIT',payload:{requests}});
+		if(state.friendRequestsReceived.length !== requests.length)
+			dispatch({type:'REQ_RECEIVED_INIT',payload:{requests}});
 	}
 
 	const getMessages = async () => {
@@ -111,45 +106,159 @@ const Main = () => {
 			}
 		});
 		const messages = await response.json();
-		dispatch({type:'MESSAGES_INIT',payload:{messages}});
+		if(state.messages.length !== messages.length)
+			dispatch({type:'MESSAGES_INIT',payload:{messages}});
 	}
 
-	const getProfileStatus = (username) => {
-		const alreadyFriends = state.friends.filter((friend) => friend.username === username)[0];
+	const getProfileStatus = async (username) => {
+		const alreadyFriends = state.friends.filter((friend) => {
+			return ((friend.user1===username) || (friend.user2===username));
+		})[0];
 		if(alreadyFriends)
 			return 'FRIEND';
-		const requestSent = state.friendRequestsSent.filter((request) => request.sender === username)[0];
+		const requestSent = state.friendRequestsSent.filter((request) => request.receiver === username)[0];
 		if(requestSent)
 			return 'REQUEST_SENT';
-		const requestReceived = state.friendRequestsReceived.filter((request) => request.receiver === username)[0];
+		const requestReceived = state.friendRequestsReceived.filter((request) => request.sender === username)[0];
 		if(requestReceived)
 			return 'REQUEST_RECEIVED';
 		return '';
 	}
 
+	const sendFriendRequest = async (username) => {
+		const url = urls.sendFriendRequest;
+		const response = await fetch(url, {
+			method: 'POST',
+			headers: {
+				Authorization: 'Token '+token,
+				'Content-Type' : 'application/json'
+			},
+			body: JSON.stringify({sender:account.username,receiver:username})
+		});
+		const sent = await response.json();
+		if(sent)
+			dispatch({type:'SEND_REQUEST',payload:{sent}});
+	}
+
+	const acceptFriendRequest = async (username) => {
+		const url = urls.acceptFriendRequest;
+		const response = await fetch(url, {
+			method: 'POST',
+			headers: {
+				Authorization: 'Token '+token,
+				'Content-Type' : 'application/json'
+			},
+			body: JSON.stringify({sender:username,receiver:account.username})
+		});
+		const accepted = await response.json();
+		if(accepted)
+			dispatch({type:'ACCEPT_REQUEST',payload:{username,newFriend:accepted}});
+	}
+
+	const removeFriendRequest = async (username) => {
+		const url = urls.removeFriendRequest;
+		let body;
+		let reqType;
+		if(state.friendRequestsSent.filter(request => request.receiver===username)[0]) {
+			reqType = 'SENT';
+			body = {sender:account.username,receiver:username};
+		}
+		else {
+			reqType = 'RECEIVED';
+			body = {sender:username,receiver:account.username};
+		}
+		const response = await fetch(url, {
+			method: 'POST',
+			headers: {
+				Authorization: 'Token '+token,
+				'Content-Type' : 'application/json'
+			},
+			body: JSON.stringify(body)
+		});
+		const removed = await response.json();
+		if(removed)
+			dispatch({type:'REMOVE_REQUEST',payload:{username,reqType}});
+	}
+
+	const removeFriend = async (username) => {
+		const url = urls.removeFriend;
+		const response = await fetch(url, {
+			method: 'POST',
+			headers: {
+				Authorization: 'Token '+token,
+				'Content-Type' : 'application/json'
+			},
+			body: JSON.stringify({user1:account.username,user2:username})
+		});
+		const removed = await response.json();
+		if(removed)
+			dispatch({type:'REMOVE_FRIEND',payload:{username}});
+	}
+
+	const sendMessage = async (friendshipId, receiver, text) => {
+		const url = urls.sendMessage;
+		const response = await fetch(url, {
+			method: 'POST',
+			headers: {
+				Authorization: 'Token '+token,
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({sender:account.username,receiver,friendshipId,text})
+		})
+		const message = await response.json();
+		if(message)
+			dispatch({type:'SEND_MESSAGE',payload:{message}})
+		return message;
+	}
+
+	const getLastTexts = async () => {
+		dispatch({type:'LAST_TEXTS'});
+	}
+
+	useEffect(() => {
+		history.push('/dashboard');
+		getFriendRequestsSent();
+		getFriends();
+		getFriendRequestsReceived();
+	}, []);
+
+	useEffect(() => {
+		getMessages();
+	}, []);
+
 	return(
 		<MainContext.Provider value={{
 				state,
-				getProfileStatus
+				getProfileStatus,
+				sendFriendRequest,
+				acceptFriendRequest,
+				removeFriendRequest,
+				removeFriend,
+				getFriends,
+				getFriendRequestsReceived,
+				getFriendRequestsSent,
+				getLastTexts,
+				getMessages,
+				sendMessage,
 			}}>
-			<section className='main-container' style={width > 568 ? {minHeight:height-200,maxHeight:'auto'} : {minHeight:height,maxHeight:'auto'}}>
+			<section className='main-container' style={width > 768 ? {minHeight:height-200,maxHeight:'auto'} : {minHeight:height-100,maxHeight:'auto'}}>
 				<Router>
 					<Sidebar toggleSidebar={toggleSidebar} showSidebar={showSidebar}/>
-					<div className='main-page' style={width < 568 ? {minHeight:height-100,maxHeight:'auto'} : {}}>
+					<div className='main-page' style={width < 768 ? {minHeight:height-100,maxHeight:'auto'} : {}}>
 						<div className='search-bar'>
-							{width < 568 && <button type='button' onClick={toggleSidebar}><GiHamburgerMenu/></button>}
+							{width < 768 && <button type='button' onClick={toggleSidebar}><GiHamburgerMenu/></button>}
 							<Link to='/dashboard/search'>
 								<input type='text' value={state.searchInput} onChange={(event)=>dispatch({type:'SEARCH_INPUT',payload:{searchInput:event.target.value}})}/>
 							</Link>
 							<button onClick={searchAccounts}><AiOutlineSearch/></button>
 						</div>
-						<div className='content-container' style={width > 568 ? {height:height-295} : {height:height-195}}>
+						<div className='content-container' style={width > 768 ? {height:height-295} : {height:height-195}}>
 							<Switch>
-								<Route exact path='/dashboard/'>
-									Chats
+								<Route exact path='/dashboard'>
+									<Chats/>
 								</Route>
 								<Route path='/dashboard/notifications'>
-									Notifications
+									<Notifications/>
 								</Route>
 								<Route path='/dashboard/myprofile'>
 									<MyProfile/>
@@ -157,14 +266,14 @@ const Main = () => {
 								<Route path='/dashboard/profile/:username'>
 									<Profile/>								
 								</Route>
-								<Route path='/dashboard/conversation/:username'>
-									Conversation								
+								<Route path='/dashboard/conversation/:id/:username'>
+									<Conversation/>								
 								</Route>
 								<Route path='/dashboard/search'>
 									<SearchResults/>							
 								</Route>
 								<Route path='/dashboard/*'>
-									Chats - error
+									<Chats/>
 								</Route>
 							</Switch>
 						</div>

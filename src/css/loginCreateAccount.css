@@ -7,14 +7,15 @@
 	align-items: center;
 	position: relative;
 	padding: 50px 0px 50px 0px;
-	background: #1a1b1c;
+	background: var(--primary);
 	width: 50%;
 	margin: auto;
 	box-sizing: border-box;
+	box-shadow: 0px 0px 1px black;
 }
 .account-form h1
 {
-	color: white;
+	color: var(--text);
 }
 .account-form img
 {
@@ -35,7 +36,7 @@
 }
 .form-field svg
 {
-	color: white;
+	color: var(--text);
 	font-size: 1.7em;
 	margin-right: 10px;
 }
@@ -43,11 +44,11 @@
 {
 	height: 35px;
 	width: 225px;
-	background-color: black;
+	background-color: var(--tertiary);
 	padding-left: 10px;
 	border: 0px;
-	border-bottom: 2px solid white;
-	color: white;
+	border-bottom: 2px solid var(--text);
+	color: var(--text);
 	font-size: 1em;
 }
 .form-field select
@@ -64,8 +65,8 @@
 }
 .form-field input:focus
 {
-	border-color: #dc143c;
-	color: #dc143c;
+	border-color: var(--secondary);
+	color: var(--secondary);
 }
 .account-form .alert
 {
@@ -74,13 +75,13 @@
 }
 .account-form button
 {
-	background-color: #dc143c;
+	background-color: var(--secondary);
 	height: 35px;
 	width: 120px;
 	border: 0px;
 	border-radius: 9999px;
 	font-weight: bold;
-	color: white;
+	color: var(--text);
 	margin-top: 10px;
 	margin-bottom: 20px;
 }
@@ -90,21 +91,21 @@
 }
 .account-form a
 {
-	color: white;
+	color: var(--text);
 	font-size: 0.9em;
 }
 .account-form a:hover
 {
-	text-shadow: 0px 1px 2px white;
+	text-shadow: 0px 1px 2px var(--text);
 }
-@media (min-width: 568px) and (max-width: 1302px)
+@media (min-width: 768px) and (max-width: 1302px)
 {
 	.account-form
 	{
 		width: 70%;
 	}
 }
-@media (min-width: 0px) and (max-width: 568px)
+@media (min-width: 0px) and (max-width: 768px)
 {
 	.account-form
 	{

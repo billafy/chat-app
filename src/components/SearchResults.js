@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
 import {BiArrowBack} from 'react-icons/bi';
-import {GrNext} from 'react-icons/gr';
+import {AiFillCaretRight} from 'react-icons/ai';
 
 import {MainContext} from './Main';
 import Loading from './Loading';
@@ -16,7 +16,7 @@ const SearchResults = () => {
 	return (
 		<section className='search-results'>
 			<Link to='/dashboard'><BiArrowBack/></Link>
-			<h5>{searchAlert}</h5>
+			<h4>{searchAlert}</h4>
 			<div className='results-list'>
 				{!searchLoading
 					?
@@ -25,7 +25,7 @@ const SearchResults = () => {
 										<div className='result-item' key={result.username}>
 											<img src={profilePicture}/>
 											<h4>{result.username}</h4>
-											<Link to={`/dashboard/profile/${result.username}`}><GrNext/></Link>
+											<Link to={`/dashboard/profile/${result.username}`}><AiFillCaretRight/></Link>
 										</div>		
 									);
 								})

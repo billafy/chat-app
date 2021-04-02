@@ -1,0 +1,57 @@
+.notifications
+{
+	padding: 30px;
+}
+.notifications h1
+{
+	color: var(--secondary);
+	text-align: center;
+	font-size: 1.5em;
+	margin: 0px;
+}
+.notifications h4
+{
+	text-align: center;
+	font-weight: normal;
+	animation-iteration-count: 63;
+}
+.notification 
+{
+	box-shadow: 0px 0px 3px var(--tertiary);
+	padding: 15px;
+	margin: 20px 0px 0px 0px;
+}
+.notification p
+{
+	margin: 0px;
+	margin-bottom: 10px;
+}
+.notification button
+{
+	width: 75px;
+	height: 25px;
+	border: 0px;
+	margin-right: 5px;
+}
+.notification button:hover
+{
+	transform: scale(1.05);
+}
+.notification a
+{
+	float: right;
+	color: var(--text);
+	font-size: 0.9em;
+}
+.notification a:hover
+{
+	text-shadow: 0px 0px 3px var(--text);
+}
+.notifications .reload
+{
+	display: flex;
+	margin: auto;
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}

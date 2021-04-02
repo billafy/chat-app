@@ -8,7 +8,7 @@ const Homepage = () => {
 	const {state:{height,width}} = useContext(AppContext);
 
 	return (
-		<section className='homepage' style={width > 568 ? {minHeight:height-200,maxHeight:'auto'} : {minHeight:height-100,maxHeight:'auto'}}>
+		<section className='homepage' style={width > 768 ? {minHeight:height-200,maxHeight:'auto'} : {minHeight:height-100,maxHeight:'auto'}}>
 			<div className='logo'>
 				<img src={logo}/>
 				<h1>ChatApp</h1>

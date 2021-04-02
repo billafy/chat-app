@@ -41,7 +41,7 @@ const Login = () => {
 	}
 
 	return(
-		<section className='account-form' style={width > 568 ? {minHeight:height-200,maxHeight:'auto'} : {minHeight:height-100,maxHeight:'auto'}}>
+		<section className='account-form' style={width > 768 ? {minHeight:height-200,maxHeight:'auto'} : {minHeight:height-100,maxHeight:'auto'}}>
 			<img src={logo}/>
 			<h1>
 				LOGIN

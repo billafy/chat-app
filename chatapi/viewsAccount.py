@@ -40,7 +40,7 @@ def accountListView(request) :
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def accountSearchView(request, keyword) :
-	accounts = Account.objects.filter(username__istartswith=keyword)
+	accounts = Account.objects.filter(username__istartswith=keyword).exclude(username=str(request.user))
 	serializer = AccountSerializer(accounts, many=True)
 	return Response(serializer.data)
 
