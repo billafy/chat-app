@@ -1,4 +1,4 @@
-const prefix = 'https://billafy.pythonanywhere.com/chat-api/';
+const prefix = 'dummy api url';
 
 export const urls = {
 	accountList: prefix+'account-list/',
