@@ -1,0 +1,70 @@
+.chats
+{
+	padding: 30px 15px 30px 15px;
+}
+.chats h1
+{
+	font-size: 1.5em;
+	color: var(--secondary);
+	text-align: center;
+	margin: 0px;
+}
+.chats .reload
+{
+	display: flex;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	justify-content: center;
+	align-items: center;
+}
+.chat
+{
+	display: grid;
+	grid-template-columns: 90px auto;
+	align-items: center;
+	grid-gap: 10px;
+	color: var(--text);
+	box-shadow: 0px 0px 3px var(--tertiary);
+	border: solid var(--text);
+	border-width: 1px 0px 1px 0px;
+	padding: 10px;
+}
+.chat:hover
+{
+	box-shadow: 0px 0px 1px var(--text);
+}
+.chat img
+{
+	width: 85px;
+	height: 85px;
+}
+.chat div p
+{
+	margin: 0px;
+}
+.chat div span
+{
+	color: var(--text2);
+	font-size: 0.9em;
+}
+.no-friends
+{
+	text-align: center;
+}
+.no-friends p
+{
+	color: var(--text);
+}
+.no-friends button
+{
+	background: var(--secondary);
+	padding: 10px;
+	box-sizing: border-box;
+	color: var(--text2);
+	margin-top: 5px;
+	border: 0px;
+}
+.no-friends button:hover
+{
+	transform: scale(1.1);
+}
