@@ -1,5 +1,4 @@
-# ChatApp
-(I haven't named it yet)
+# Wynx
 A full stack chat web application built using Django's Rest Framework and React.
-# https://lami-chat.netlify.app
+# https://wynx.netlify.app
 Add me - LamiFY
